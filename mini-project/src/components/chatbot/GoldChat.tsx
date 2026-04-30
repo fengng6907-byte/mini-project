@@ -22,7 +22,7 @@ function generateResponse(question: string, goldPrice: ReturnType<typeof useGold
 
   if (q.includes("bullish") || q.includes("bearish") || q.includes("sentiment") || q.includes("outlook")) {
     if (!insight) return "I'm still analyzing market sentiment. Please check back shortly.";
-    return `Today's sentiment is **${insight.sentiment.toUpperCase()}**. ${insight.outlook}`;
+    return `Today's sentiment is **${insight.sentiment.toUpperCase()}**. ${insight.outlook ?? insight.summary}`;
   }
 
   if (q.includes("level") || q.includes("support") || q.includes("resistance")) {
@@ -34,23 +34,23 @@ function generateResponse(question: string, goldPrice: ReturnType<typeof useGold
 
   if (q.includes("inflation")) {
     return "**Gold and Inflation:**\n\nGold is traditionally viewed as an inflation hedge. When inflation rises, the purchasing power of fiat currencies decreases, making gold more attractive as a store of value.\n\n" +
-      (insight ? `Current view: ${insight.drivers.inflation}` : "Load market data for current analysis.");
+      (insight ? `Current view: ${insight.drivers?.inflation ?? insight.summary}` : "Load market data for current analysis.");
   }
 
   if (q.includes("usd") || q.includes("dollar")) {
     return "**Gold and the US Dollar:**\n\nGold has an inverse relationship with the USD. A stronger dollar makes gold more expensive for foreign buyers, typically pressuring prices down. Conversely, dollar weakness supports gold prices.\n\n" +
-      (insight ? `Current view: ${insight.drivers.usdStrength}` : "Load market data for current analysis.");
+      (insight ? `Current view: ${insight.drivers?.usdStrength ?? insight.summary}` : "Load market data for current analysis.");
   }
 
   if (q.includes("rate") || q.includes("interest") || q.includes("fed")) {
     return "**Gold and Interest Rates:**\n\nHigher interest rates increase the opportunity cost of holding non-yielding assets like gold. When central banks raise rates, gold can face downward pressure. Rate cut expectations tend to support gold.\n\n" +
-      (insight ? `Current view: ${insight.drivers.interestRates}` : "Load market data for current analysis.");
+      (insight ? `Current view: ${insight.drivers?.interestRates ?? insight.summary}` : "Load market data for current analysis.");
   }
 
   if (q.includes("buy") || q.includes("invest") || q.includes("should")) {
     return "I can provide market data and analysis, but I'm not a financial advisor. Here's what I can share:\n\n" +
       (goldPrice ? `- Current price: ${formatCurrency(goldPrice.price)}\n` : "") +
-      (insight ? `- Sentiment: ${insight.sentiment}\n- ${insight.outlook}\n\n` : "") +
+      (insight ? `- Sentiment: ${insight.sentiment}\n- ${insight.outlook ?? insight.summary}\n\n` : "") +
       "Always do your own research and consider consulting a licensed financial advisor before making investment decisions.";
   }
 

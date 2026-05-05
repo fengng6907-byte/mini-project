@@ -9,19 +9,31 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "GOLD Eyes - See the Market. Seize the Value.",
+  title: {
+    default: "GOLD Eyes — Market Intelligence for Deal Closers",
+    template: "%s — GOLD Eyes",
+  },
   description:
-    "Intelligent gold market tracking platform with real-time XAU/USD data, analytics, calculators, and retail buying insights for Malaysia and Singapore.",
-  keywords: ["gold", "XAU/USD", "gold price", "gold tracker", "Malaysia gold", "Singapore gold"],
+    "Real-time XAU/USD intelligence, AI-powered insights, and portfolio analytics that help salespeople, real estate agents, and entrepreneurs close more deals.",
+  keywords: [
+    "gold market intelligence", "XAU/USD live price", "gold trading simulator",
+    "lead closing rate", "sales intelligence", "gold tracker Malaysia",
+    "gold tracker Singapore", "gold price alerts",
+  ],
   manifest: "/manifest.json",
   icons: {
     icon: "/favicon.svg",
     apple: "/apple-touch-icon.png",
   },
+  openGraph: {
+    title: "GOLD Eyes — Market Intelligence for Deal Closers",
+    description: "Live gold data, AI insights, and portfolio analytics that professionals use to close more deals.",
+    type: "website",
+  },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0B0B0B",
+  themeColor: "#F4F4F4",
   width: "device-width",
   initialScale: 1,
 };

@@ -1,24 +1,38 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-background: #0B0B0B;
-  --color-foreground: #FFFFFF;
-  --color-gold: #D4AF37;
+  /* ── Luxury Tech: Matte Silver Palette ── */
+  --color-background: #F4F4F4;
+  --color-surface:    #FFFFFF;
+  --color-surface-light: #EEEEEE;
+  --color-surface-hover: #E8E8E8;
+  --color-border:    #D4D4D4;
+  --color-foreground: #1A1A1A;
+  --color-muted:     #6B7280;
+
+  /* Gold shiny accents */
+  --color-gold:      #D4AF37;
   --color-gold-light: #E8C547;
   --color-gold-dark: #B8941F;
-  --color-surface: #141414;
-  --color-surface-light: #1E1E1E;
-  --color-surface-hover: #252525;
-  --color-border: #2A2A2A;
-  --color-muted: #888888;
-  --color-success: #22C55E;
-  --color-danger: #EF4444;
+
+  /* Silver */
+  --color-silver:    #E5E5E5;
+
+  /* Matte Red — CTA only */
+  --color-cta:       #B91C1C;
+  --color-cta-hover: #991B1B;
+
+  /* Status */
+  --color-success:   #16A34A;
+  --color-danger:    #DC2626;
+
   --font-sans: var(--font-inter);
 }
 
+/* ── Scrollbar ── */
 * {
   scrollbar-width: thin;
-  scrollbar-color: #2A2A2A #0B0B0B;
+  scrollbar-color: #D4D4D4 #F4F4F4;
 }
 
 body {
@@ -27,20 +41,20 @@ body {
   font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
 }
 
-/* Gold shimmer animation */
+/* ── Gold shimmer (brand logo only) ── */
 @keyframes gold-shimmer {
-  0% { background-position: -200% center; }
-  100% { background-position: 200% center; }
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
 }
 
-.gold-shimmer {
+.shimmer {
   background: linear-gradient(
     90deg,
-    #D4AF37 0%,
-    #E8C547 25%,
-    #D4AF37 50%,
-    #B8941F 75%,
-    #D4AF37 100%
+    #B8941F 0%,
+    #D4AF37 25%,
+    #F0CC50 50%,
+    #D4AF37 75%,
+    #B8941F 100%
   );
   background-size: 200% auto;
   -webkit-background-clip: text;
@@ -49,41 +63,63 @@ body {
   animation: gold-shimmer 3s linear infinite;
 }
 
-@keyframes pulse-gold {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); }
-  50% { box-shadow: 0 0 0 8px rgba(212, 175, 55, 0); }
+/* ── Glassmorphism navbar ── */
+.glass-nav {
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.18);
+  box-shadow: 0 2px 32px rgba(0, 0, 0, 0.06);
 }
 
-.pulse-gold {
-  animation: pulse-gold 2s ease-in-out infinite;
+/* ── Matte surfaces ── */
+.matte-card {
+  background: #FFFFFF;
+  border: 1px solid #D4D4D4;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
 }
 
+.matte-card-grey {
+  background: linear-gradient(145deg, #F4F4F4 0%, #EBEBEB 100%);
+  border: 1px solid #D4D4D4;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+/* ── Gold accent border ── */
+.gold-border {
+  border: 1px solid rgba(212, 175, 55, 0.4);
+}
+
+/* ── Animations ── */
 @keyframes fade-in-up {
-  from { opacity: 0; transform: translateY(16px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
+.animate-fade-in-up { animation: fade-in-up 0.6s ease-out forwards; }
 
-.animate-fade-in-up {
-  animation: fade-in-up 0.5s ease-out forwards;
+@keyframes pulse-gold {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.35); }
+  50%       { box-shadow: 0 0 0 8px rgba(212, 175, 55, 0); }
 }
+.pulse-gold { animation: pulse-gold 2s ease-in-out infinite; }
 
-/* TradingView widget overrides */
-.tradingview-widget-container {
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-/* Trading simulator utilities */
-.up { color: var(--color-success); }
+/* ── Trading simulator utilities ── */
+.up   { color: var(--color-success); }
 .down { color: var(--color-danger); }
 
 @keyframes flash-green {
   0%, 100% { background: transparent; }
-  50% { background: rgba(34, 197, 94, 0.15); }
+  50%       { background: rgba(22, 163, 74, 0.12); }
 }
 @keyframes flash-red {
   0%, 100% { background: transparent; }
-  50% { background: rgba(239, 68, 68, 0.15); }
+  50%       { background: rgba(220, 38, 38, 0.12); }
 }
-.flash-up { animation: flash-green 0.6s ease; }
-.flash-down { animation: flash-red 0.6s ease; }
+.flash-up   { animation: flash-green 0.6s ease; }
+.flash-down { animation: flash-red   0.6s ease; }
+
+/* ── TradingView widget ── */
+.tradingview-widget-container {
+  border-radius: 12px;
+  overflow: hidden;
+}

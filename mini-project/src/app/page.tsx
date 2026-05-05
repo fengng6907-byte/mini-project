@@ -12,6 +12,7 @@ import PortfolioTracker from "@/components/portfolio/PortfolioTracker";
 import GoldChat from "@/components/chatbot/GoldChat";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 function HeroSection() {
   return (
@@ -40,6 +41,25 @@ function HeroSection() {
       >
         See the Market. Seize the Value.
       </motion.p>
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.35 }}
+        className="mt-6 flex items-center justify-center gap-3"
+      >
+        <Link
+          href="/dashboard"
+          className="px-5 py-2.5 bg-gold text-background text-sm font-semibold rounded-xl hover:bg-gold-light transition-colors"
+        >
+          Start Trading →
+        </Link>
+        <Link
+          href="/register"
+          className="px-5 py-2.5 border border-border text-sm text-muted hover:text-foreground hover:border-border/70 rounded-xl transition-colors"
+        >
+          Create Account
+        </Link>
+      </motion.div>
     </motion.section>
   );
 }

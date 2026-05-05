@@ -1,0 +1,50 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String?
+  balance      Float    @default(10000)
+  goldHeld     Float    @default(0)
+  goldAvgCost  Float    @default(0)
+  totalPnl     Float    @default(0)
+  totalTrades  Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  trades       Trade[]
+  orders       Order[]
+}
+
+model Trade {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  side      String   // BUY | SELL
+  goldQty   Float    // troy oz
+  price     Float    // USD per oz at execution
+  total     Float    // goldQty * price
+  fee       Float    // 0.1% of total
+  pnl       Float    @default(0) // realized P&L (sells only)
+  createdAt DateTime @default(now())
+}
+
+model Order {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  side        String    // BUY | SELL
+  orderType   String    // MARKET | LIMIT
+  goldQty     Float     // troy oz
+  limitPrice  Float?    // USD per oz (limit orders only)
+  status      String    @default("OPEN") // OPEN | FILLED | CANCELLED
+  filledAt    DateTime?
+  filledPrice Float?
+  createdAt   DateTime  @default(now())
+}

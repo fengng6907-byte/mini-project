@@ -1,25 +1,16 @@
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 import { prisma } from "./prisma";
+import { verifyToken } from "./jwt";
+
+export type { AuthPayload } from "./jwt";
+export { verifyToken } from "./jwt";
 
 const JWT_SECRET = process.env.JWT_SECRET ?? "gold-eyes-dev-secret-change-in-prod";
 const COOKIE_NAME = "gold_token";
 
-export interface AuthPayload {
-  userId: string;
-  email: string;
-}
-
-export function signToken(payload: AuthPayload): string {
+export function signToken(payload: { userId: string; email: string }): string {
   return jwt.sign(payload, JWT_SECRET, { expiresIn: "7d" });
-}
-
-export function verifyToken(token: string): AuthPayload | null {
-  try {
-    return jwt.verify(token, JWT_SECRET) as AuthPayload;
-  } catch {
-    return null;
-  }
 }
 
 export async function getAuthUser() {

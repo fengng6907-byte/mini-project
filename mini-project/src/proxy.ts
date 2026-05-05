@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import { verifyToken } from "@/lib/auth";
+import { verifyToken } from "@/lib/jwt";
 
 const PROTECTED = ["/dashboard", "/portfolio", "/leaderboard"];
 const AUTH_ONLY = ["/login", "/register"];
 
-export function middleware(req: NextRequest) {
+export function proxy(req: NextRequest) {
   const token = req.cookies.get("gold_token")?.value;
   const payload = token ? verifyToken(token) : null;
   const { pathname } = req.nextUrl;
